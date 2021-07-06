@@ -1,0 +1,10 @@
+<div class="alert alert-warning  " >
+    {{message}}
+    <ng-content></ng-content>
+    <hr/>
+     
+        <a class="btn btn-sm btn-dark" (click)="yesClick()">Yes</a>
+        <a style="margin-left: 5px;" *ngIf="confirmAlert" class="btn btn-sm btn-dark" (click)="noClick()">No</a>
+    
+</div>
+

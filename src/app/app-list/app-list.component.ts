@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { EmployeeService } from './../employee.service';
 import { Employee } from './../models/employee';
 import { PageList } from './../models/page-list';
+import { AppComponent } from './../app.component';
 
 @Component({
   selector: 'app-app-list',
@@ -11,25 +12,12 @@ import { PageList } from './../models/page-list';
 })
 export class AppListComponent implements OnInit {
   tableHeaders:Array<any> = [
-    {
-      label:"Nama", name:"name"
-    },
-    {
-      label:"Tanggal Lahir", name:"birthDate"
-    },
-    {
-      label:"Jabatan", name:"position.name"
-    },
-    {
-      label:"NIP", name:"idNumber"
-    },
-    {
-      label:'Jenis Kelamin', name:'gender'
-    }
+    { label:"Nama", name:"name" }, { label:"Tanggal Lahir", name:"birthDate" },
+    { label:"Jabatan", name:"position" }, { label:"NIP", name:"idNumber" }, { label:'Jenis Kelamin', name:'gender' }
   ];
   orderBy:string = "id";
   orderType:string = "asc";
-  constructor(private employeeService:EmployeeService, private router:Router) { }
+  constructor(private employeeService:EmployeeService, private router:Router, private app:AppComponent) { }
   employees:Employee[] = [];
   ngOnInit(): void {
     this.loadItems();
@@ -51,17 +39,19 @@ export class AppListComponent implements OnInit {
     this.loadItems();
   }
 
-
-
   deleteRecord(employee:Employee):void {
-    this.employeeService.delete(employee)
-    .subscribe((employee:Employee)=>{
-      this.loadItems();
+    this.app.showConfirm("Hapus data?").then((ok)=>{
+      if (!ok) return;
+        this.employeeService.delete(employee)
+        .subscribe(this.loadItems);
     });
   }
   showUpdateForm(employee:Employee):void {
-    this.router.navigate(['addEdit'], { state: { employeeId: employee.id} });
-    // this.router.navigateByUrl('/addEdit', { state: { employee:  employee } });
+    this.app.showConfirm("Edit data?").then((ok)=>{
+      if (ok) {
+        this.router.navigate(['addEdit'], { state: { employeeId: employee.id} });
+      }
+    });
   }
 
 }
