@@ -1,35 +1,47 @@
 <app-card header="List Karyawan">
-<table class="table">
-    <thead>
+    <div class="container-fluid">
+    <div class="btn-group" style="margin-top: 10px; margin-bottom: 10px;" >
+        <a class="btn btn-success btn-sm" routerLink="/addEdit">Tambah</a>
+        <a class="btn btn-success btn-sm" (click)="loadItems()">Reload</a>
+    </div>
+  <div   style="overflow: scroll; height: 70vh">
+    <table class="table">
+      <thead>
         <th>No</th>
-        <th>Nama</th>
-        <th>Tgl Lahir</th>
-        <th>Jabatan</th>
-        <th>NIP</th>
-        <th>Jenis Kelamin</th>
+        <th class="sortable-header" *ngFor="let header of tableHeaders" (click)="sortBy(header.name)">
+          {{ header.label }}
+          <span *ngIf="header.name == orderBy " style="float: right;">
+            <i [ngClass]="orderType == 'asc'? 'fas fa-long-arrow-alt-up' : 'fas fa-long-arrow-alt-down'"></i>
+          </span>
+            <span *ngIf="header.name != orderBy " style="float: right;">
+                <i class="fas fa-sort"></i>
+            </span>
+        </th>
         <th>Aksi</th>
-    </thead>
-    <tbody>
-        <tr *ngFor="let employee of employees; let i = index" [attr.data-index]="i">
-            <td>{{i+1}}</td>
-            <td>{{employee.name}}</td>
-            <td>{{employee.birthDateString}}</td>
-            <td>{{employee.position?.name}}</td>
-            <td>{{employee.idNumber}}</td>
-            <td>{{employee.genderString}}</td>
-            <td>
-                <div class="btn-group">
-                    <a class="btn btn-dark btn-sm" (click)="showUpdateForm(employee)">
-                        <i class="fas fa-edit"></i>
-                    </a>
-                    <a class="btn btn-danger btn-sm" (click)="deleteRecord(employee)">
-                        <i class="fas fa-trash"></i>
-                    </a>
-                </div>
-            </td>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let employee of employees; let i = index"
+          [attr.data-index]="i"
+        >
+          <td>{{ i + 1 }}</td>
+          <td>{{ employee.name }}</td>
+          <td>{{ employee.birthDateString }}</td>
+          <td>{{ employee.position?.name }}</td>
+          <td>{{ employee.idNumber }}</td>
+          <td>{{ employee.genderString }}</td>
+          <td>
+            <div class="btn-group">
+              <a class="btn btn-dark btn-sm" (click)="showUpdateForm(employee)">
+                <i class="fas fa-edit"></i>
+              </a>
+              <a class="btn btn-danger btn-sm" (click)="deleteRecord(employee)">
+                <i class="fas fa-trash"></i>
+              </a>
+            </div>
+          </td>
         </tr>
-    </tbody>
-</table>
-
+      </tbody>
+    </table>
+  </div></div>
 </app-card>
-

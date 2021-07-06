@@ -18,7 +18,7 @@ export class AppFormComponent implements OnInit {
   employeeId:number|undefined;
   constructor(public activatedRoute: ActivatedRoute, private router:Router, private employeeService: EmployeeService) { 
     this.employeeId = (this.router.getCurrentNavigation()?.extras?.state?.employeeId); // should log out 'bar'
-    
+    console.debug("EMP id: ", this.employeeId);
   }
 
   ngOnInit(): void {
@@ -32,16 +32,16 @@ export class AppFormComponent implements OnInit {
    
   }
   submit(): void {
-    if (this.employee.id && this.employee.id > 0){
+    if (this.employeeId && this.employee.id && this.employee.id > 0){
       this.employeeService.update(this.employee)
       .subscribe((employee:Employee)=>{
-
+        this.router.navigateByUrl("/index");
       });
       return;
     }
     this.employeeService.insert(this.employee)
     .subscribe((employee:Employee)=>{
-
+      this.router.navigateByUrl("/index");
     });
   }
   updatePosition(position:Position) {

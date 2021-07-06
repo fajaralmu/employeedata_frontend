@@ -5,7 +5,7 @@ export class Employee {
     position:Position|undefined;
     name:string|undefined;
     idNumber:string|undefined;
-    gender:number = 1;
+    gender:number = 0;
     birthDate:Date|undefined;
     
     genderString:string = "";

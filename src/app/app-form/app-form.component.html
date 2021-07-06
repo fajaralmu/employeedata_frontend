@@ -12,7 +12,10 @@
               <input [(ngModel)]="employee.birthDate"  required type="date" name="birthDate" class="form-control " />
             </div>
         </div>
-        <div class="form-group row">
+        <p *ngIf="positions.length == 0">
+            memuat data...
+        </p>
+        <div class="form-group row" *ngIf="positions.length > 0">
             <label   class="col-sm-2 col-form-label">Jabatan</label>
             <div class="col-sm-10">
               <select name="position"   class="form-control" required>
