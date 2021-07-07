@@ -18,11 +18,12 @@ export class AppListComponent implements OnInit {
   orderBy:string = "id";
   orderType:string = "asc";
   constructor(private employeeService:EmployeeService, private router:Router, private app:AppComponent) { }
-  employees:Employee[] = [];
+  employees:Employee[] | undefined= undefined;
   ngOnInit(): void {
     this.loadItems();
   }
   loadItems():void {
+    this.employees = undefined;
     this.employeeService.getEmployeeList(this.orderBy, this.orderType)
     .subscribe((pageList:PageList)=>{
       this.employees = pageList.content;
