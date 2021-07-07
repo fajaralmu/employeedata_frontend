@@ -5,7 +5,8 @@ import { PageList } from './models/page-list';
 import { Employee } from './models/employee';
 import { EmployeeDTO } from './models/employee-dto';
 import { TableRequest } from './models/table-request';
-const host = 'http://localhost:8080/employeedata/employee/';
+const host = 'https://employeedata2.herokuapp.com/employee/';
+// const host = 'http://localhost:8080/employeedata/employee/';
 @Injectable({
   providedIn: 'root'
 })
