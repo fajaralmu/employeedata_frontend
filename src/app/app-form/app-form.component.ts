@@ -33,7 +33,7 @@ export class AppFormComponent implements OnInit {
    
   }
   submit(): void {
-    this.app.showConfirm("Simpan data").then((ok)=>{
+    this.app.showConfirm("Apakah Anda akan menyimpan data ini?").then((ok)=>{
       if (ok) this.doSubmit();
     })
    

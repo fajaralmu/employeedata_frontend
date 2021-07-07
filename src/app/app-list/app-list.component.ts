@@ -26,7 +26,7 @@ export class AppListComponent implements OnInit {
     this.employeeService.getEmployeeList(this.orderBy, this.orderType)
     .subscribe((pageList:PageList)=>{
       this.employees = pageList.content;
-    })
+    }, (err)=> this.handleError(err));
   }
   sortBy(key:string) :void {
     if (this.orderBy != key) {
@@ -38,16 +38,19 @@ export class AppListComponent implements OnInit {
     this.orderType = this.orderType == "asc"?"desc":"asc";
     this.loadItems();
   }
-
+  handleError(error:any) {
+    console.debug("Error: ", error);
+    this.app.showInfo("Operasi gagal");
+  }
   deleteRecord(employee:Employee):void {
-    this.app.showConfirm("Hapus data?").then((ok)=>{
+    this.app.showConfirm("Apakah Anda akan menghapus data ini?").then((ok)=>{
       if (!ok) return;
         this.employeeService.delete(employee)
-        .subscribe(this.loadItems);
+        .subscribe((response)=>this.loadItems(), (err)=> this.handleError(err));
     });
   }
   showUpdateForm(employee:Employee):void {
-    this.app.showConfirm("Edit data?").then((ok)=>{
+    this.app.showConfirm("Apakah Anda akan mengedit data ini?").then((ok)=>{
       if (ok) {
         this.router.navigate(['addEdit'], { state: { employeeId: employee.id} });
       }
